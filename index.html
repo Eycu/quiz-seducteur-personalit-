@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de Personnalité Séduction — Nosimpszone</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Barlow+Condensed:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noir:#0A0A0A;--gris1:#181818;--gris2:#222222;--gris3:#2E2E2E;
+  --bordeaux:#800020;--bordeaux2:#9B0026;--bordeaux3:#5C0017;
+  --or:#C9A84C;--or2:#E2C06A;--or3:#a07c2a;
+  --blanc:#F2F2F2;--blanc2:#C8C8C8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--noir);color:var(--blanc);font-family:'Lato',sans-serif;min-height:100vh;overflow-x:hidden;}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.amb1{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(128,0,32,.12) 0%,transparent 70%);top:-100px;left:-200px;}
+.amb2{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,.06) 0%,transparent 70%);bottom:0;right:-100px;}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 20px;}
+
+/* === TICKER === */
+.ticker{background:rgba(128,0,32,.18);border-bottom:1px solid rgba(128,0,32,.3);padding:8px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:200;}
+.ticker-inner{display:inline-flex;animation:tick 55s linear infinite;}
+.ticker-item{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;color:rgba(242,242,242,.7);padding:0 28px;display:inline-flex;align-items:center;gap:8px;}
+.ticker-item b{color:var(--or);}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* === STICKY HDR === */
+.sticky-hdr{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,.15);transform:translateY(-100%);transition:transform .35s ease;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:12px;}
+.sticky-hdr.on{transform:translateY(0);}
+.sticky-left{display:flex;flex-direction:column;}
+.sticky-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(242,242,242,.35);}
+.sticky-time{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--or);line-height:1;}
+.sticky-disc{font-size:10px;color:rgba(242,242,242,.35);letter-spacing:1px;}
+.sticky-btn{background:linear-gradient(135deg,var(--or3),var(--or));color:var(--noir);border:none;padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);text-decoration:none;display:inline-block;flex-shrink:0;}
+
+/* === INTRO === */
+#s-intro{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px;animation:fadeUp .9s ease both;position:relative;z-index:1;}
+.nsz-stamp{display:inline-flex;align-items:center;gap:10px;margin-bottom:36px;}
+.nsz-line{width:32px;height:1px;background:var(--or);opacity:.5;}
+.nsz-txt{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:5px;color:var(--or);text-transform:uppercase;}
+.i-eye{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:6px;color:var(--bordeaux2);text-transform:uppercase;font-weight:600;margin-bottom:18px;}
+.i-h1{font-family:'Playfair Display',serif;font-size:clamp(34px,7vw,58px);font-weight:900;line-height:1.05;margin-bottom:22px;background:linear-gradient(155deg,var(--blanc) 30%,var(--or2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.i-desc{font-size:15px;font-weight:300;color:var(--blanc2);line-height:1.7;max-width:490px;margin:0 auto 44px;}
+.pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:44px;}
+.pill{background:var(--gris1);border:1px solid rgba(201,168,76,.15);padding:9px 18px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--blanc2);}
+.pill b{color:var(--or);margin-right:5px;}
+.btn-start{position:relative;display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--bordeaux),var(--bordeaux2));border:none;color:var(--blanc);padding:20px 48px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;cursor:pointer;overflow:hidden;transition:transform .3s,box-shadow .3s;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.btn-start::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--or3),var(--or));opacity:0;transition:opacity .3s;}
+.btn-start:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(128,0,32,.4);}
+.btn-start:hover::before{opacity:1;}
+.btn-start span,.btn-arr{position:relative;z-index:1;}
+.btn-arr{font-size:18px;transition:transform .3s;}
+.btn-start:hover .btn-arr{transform:translateX(4px);}
+.i-note{margin-top:18px;font-size:12px;color:rgba(242,242,242,.22);letter-spacing:1px;}
+
+/* === QUIZ === */
+#s-quiz{display:none;min-height:100vh;padding-bottom:60px;position:relative;z-index:1;}
+.q-topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 20px 0;max-width:680px;margin:0 auto;}
+.q-logo{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:4px;color:var(--or);text-transform:uppercase;}
+.q-cnt{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:rgba(242,242,242,.35);letter-spacing:2px;}
+.q-prog-wrap{padding:14px 20px 0;max-width:680px;margin:0 auto;}
+.q-prog-track{height:2px;background:rgba(242,242,242,.07);}
+.q-prog-fill{height:100%;background:linear-gradient(90deg,var(--bordeaux),var(--or));transition:width .6s cubic-bezier(.4,0,.2,1);position:relative;}
+.q-prog-dot{position:absolute;right:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--or);box-shadow:0 0 10px var(--or);}
+.q-body{padding:36px 20px 0;max-width:680px;margin:0 auto;}
+.q-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:5px;color:var(--bordeaux2);text-transform:uppercase;font-weight:600;margin-bottom:12px;}
+.q-text{font-family:'Playfair Display',serif;font-size:clamp(18px,3.5vw,25px);font-weight:700;line-height:1.4;color:var(--blanc);margin-bottom:10px;}
+.q-ctx{font-size:13px;color:rgba(242,242,242,.38);font-style:italic;margin-bottom:32px;line-height:1.5;}
+.q-answers{display:flex;flex-direction:column;gap:10px;}
+.q-ans{background:var(--gris1);border:1px solid rgba(242,242,242,.07);padding:17px 20px 17px 22px;text-align:left;cursor:pointer;font-family:'Lato',sans-serif;font-size:14px;line-height:1.55;color:rgba(242,242,242,.78);transition:all .22s;position:relative;display:flex;align-items:flex-start;gap:14px;}
+.q-ans-l{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--or);font-weight:700;flex-shrink:0;margin-top:2px;}
+.q-bar{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bordeaux);transform:scaleY(0);transform-origin:bottom;transition:transform .22s;}
+.q-ans:hover{background:var(--gris2);border-color:rgba(201,168,76,.2);color:var(--blanc);transform:translateX(3px);}
+.q-ans:hover .q-bar{transform:scaleY(1);}
+.q-ans.sel{background:rgba(128,0,32,.18);border-color:rgba(128,0,32,.5);color:var(--blanc);}
+.q-ans.sel .q-bar{transform:scaleY(1);background:var(--or);}
+
+/* === LOADING === */
+#s-load{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:28px;position:relative;z-index:1;}
+.load-spin{font-size:38px;animation:spin 1.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.load-steps{display:flex;flex-direction:column;gap:10px;width:260px;}
+.ls{display:flex;align-items:center;gap:12px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(242,242,242,.28);transition:color .4s;}
+.ls.done{color:var(--or);}
+.ls-dot{width:6px;height:6px;border-radius:50%;background:rgba(242,242,242,.15);flex-shrink:0;transition:background .4s,box-shadow .4s;}
+.ls.done .ls-dot{background:var(--or);box-shadow:0 0 8px var(--or);}
+.load-bar-w{width:260px;height:2px;background:rgba(242,242,242,.08);}
+.load-bar-f{height:100%;background:linear-gradient(90deg,var(--bordeaux),var(--or));width:0%;transition:width .3s;}
+
+/* === RÉSULTAT === */
+#s-result{display:none;position:relative;z-index:1;padding-bottom:60px;}
+
+/* HERO */
+.res-hero{text-align:center;padding:56px 20px 36px;position:relative;}
+.res-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(128,0,32,.18) 0%,transparent 65%);pointer-events:none;}
+.r-eye{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:6px;color:var(--or);text-transform:uppercase;margin-bottom:14px;display:block;}
+.r-name{font-family:'Playfair Display',serif;font-size:clamp(40px,9vw,68px);font-weight:900;line-height:.95;background:linear-gradient(135deg,var(--blanc) 0%,var(--or2) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+.r-arch{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--bordeaux2);margin-bottom:36px;}
+.ring-wrap{display:flex;justify-content:center;margin-bottom:24px;}
+.ring-box{position:relative;width:168px;height:168px;}
+.ring-svg{transform:rotate(-90deg);width:168px;height:168px;}
+.ring-bg{fill:none;stroke:rgba(242,242,242,.06);stroke-width:10;}
+.ring-fill{fill:none;stroke:url(#rg);stroke-width:10;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1) .2s;}
+.ring-ctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-num{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:700;color:var(--or);line-height:1;}
+.ring-lbl{font-size:11px;letter-spacing:3px;color:rgba(242,242,242,.3);text-transform:uppercase;}
+.level-tag{display:inline-block;background:linear-gradient(135deg,var(--bordeaux3),var(--bordeaux));padding:7px 26px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--or2);clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);margin-bottom:36px;}
+.divider{display:flex;align-items:center;gap:14px;max-width:180px;margin:0 auto 32px;}
+.div-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--or3));}
+.div-line.r{background:linear-gradient(90deg,var(--or3),transparent);}
+.div-dia{width:6px;height:6px;background:var(--or);transform:rotate(45deg);}
+
+/* SECTION LABEL */
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--or);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.15);}
+
+/* QUOTE */
+.quote-blk{border-left:3px solid var(--bordeaux);padding:16px 22px;background:rgba(128,0,32,.08);margin-bottom:20px;}
+.quote-txt{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--or2);line-height:1.5;}
+
+/* SUMMARY */
+.prof-sum{background:var(--gris1);border:1px solid rgba(242,242,242,.06);padding:22px;margin-bottom:24px;}
+.prof-sum p{font-size:14px;line-height:1.8;color:rgba(242,242,242,.75);}
+
+/* STRENGTHS */
+.str-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(242,242,242,.05);}
+.str-item:last-child{border:none;}
+.str-ico{color:var(--or);font-size:14px;flex-shrink:0;margin-top:2px;}
+.str-txt{font-size:14px;color:rgba(242,242,242,.8);line-height:1.55;}
+.str-txt strong{color:var(--blanc);}
+
+/* BLUR ZONE */
+.blur-zone{position:relative;overflow:hidden;}
+.blur-inner{padding:0 20px;filter:blur(5px);user-select:none;pointer-events:none;opacity:.55;}
+.blur-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,0) 0%,rgba(10,10,10,0) 40%,rgba(10,10,10,.75) 72%,var(--noir) 100%);}
+
+/* COMPARISON CARDS */
+.comp-section{padding:0 20px 28px;max-width:680px;margin:0 auto;}
+.comp-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;text-align:center;margin-bottom:20px;}
+.comp-cards{display:flex;gap:10px;justify-content:center;align-items:flex-end;}
+.comp-card{flex:1;max-width:190px;background:var(--gris1);border:1px solid rgba(242,242,242,.08);padding:16px 12px 14px;text-align:center;position:relative;}
+.comp-card.me{border-color:var(--or);background:rgba(128,0,32,.2);transform:scale(1.05);box-shadow:0 6px 28px rgba(201,168,76,.12);}
+.cc-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--bordeaux);font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;color:var(--blanc);white-space:nowrap;}
+.cc-ico{font-size:34px;display:block;margin-bottom:8px;}
+.cc-score{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;color:var(--or);font-weight:700;margin-bottom:3px;}
+.comp-card.me .cc-score{font-size:14px;color:var(--or2);}
+.cc-name{font-size:11px;color:rgba(242,242,242,.45);}
+.comp-card.me .cc-name{color:var(--blanc2);}
+
+/* SOCIAL PROOF BAR */
+.social-bar{background:var(--gris1);border-top:1px solid rgba(242,242,242,.06);border-bottom:1px solid rgba(242,242,242,.06);padding:14px 20px;display:flex;align-items:center;justify-content:center;max-width:680px;margin:0 auto 28px;flex-wrap:wrap;gap:10px;}
+.sp-avatars{display:flex;}
+.sp-av{width:26px;height:26px;border-radius:50%;background:var(--gris3);border:2px solid var(--noir);margin-left:-7px;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.sp-av:first-child{margin-left:0;}
+.sp-txt{font-size:12px;color:rgba(242,242,242,.45);line-height:1.4;}
+.sp-txt b{color:var(--blanc2);}
+
+/* GAINS */
+.gains-sec{padding:0 20px 28px;max-width:680px;margin:0 auto;}
+.gains-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;text-align:center;margin-bottom:6px;}
+.gains-sub{font-size:12px;color:rgba(242,242,242,.35);text-align:center;margin-bottom:20px;letter-spacing:1px;}
+.gains-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:380px){.gains-grid{grid-template-columns:1fr;}}
+.gain-it{background:var(--gris1);border:1px solid rgba(242,242,242,.06);padding:15px;display:flex;align-items:flex-start;gap:10px;}
+.gain-ico{font-size:19px;flex-shrink:0;}
+.gain-txt{font-size:13px;line-height:1.5;color:rgba(242,242,242,.72);}
+
+/* TESTIMONIALS */
+.testi-sec{padding:0 16px 28px;max-width:680px;margin:0 auto;}
+.testi-title{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--or);text-align:center;margin-bottom:20px;}
+.testi-card{background:var(--gris1);border:1px solid rgba(242,242,242,.07);margin-bottom:10px;overflow:hidden;}
+.t-img{width:100%;height:130px;object-fit:cover;background:var(--gris2);display:flex;align-items:center;justify-content:center;font-size:52px;}
+.t-body{padding:14px 16px;}
+.t-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.t-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;}
+.t-flag{font-size:11px;background:var(--gris2);padding:3px 8px;letter-spacing:1px;color:rgba(242,242,242,.45);}
+.t-stars{color:var(--or);font-size:13px;letter-spacing:2px;margin-bottom:7px;}
+.t-txt{font-size:13px;line-height:1.65;color:rgba(242,242,242,.68);}
+
+/* FAQ */
+.faq-sec{padding:0 16px 28px;max-width:680px;margin:0 auto;}
+.faq-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;margin-bottom:20px;}
+.faq-item{background:var(--gris1);border:1px solid rgba(242,242,242,.06);margin-bottom:8px;overflow:hidden;}
+.faq-q{display:flex;align-items:flex-start;gap:12px;padding:15px 18px;cursor:pointer;transition:background .2s;}
+.faq-q:hover{background:var(--gris2);}
+.faq-ico{width:23px;height:23px;border-radius:50%;background:rgba(128,0,32,.3);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--or);flex-shrink:0;}
+.faq-qt{font-size:14px;font-weight:700;line-height:1.4;flex:1;color:var(--blanc);}
+.faq-arr{color:var(--or);font-size:15px;flex-shrink:0;transition:transform .3s;}
+.faq-item.open .faq-arr{transform:rotate(180deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;}
+.faq-item.open .faq-a{max-height:250px;padding:0 18px 15px 53px;}
+.faq-a p{font-size:13px;line-height:1.75;color:rgba(242,242,242,.6);}
+
+/* PAYWALL */
+.paywall{margin:0 16px 0;background:var(--gris1);border:1px solid rgba(201,168,76,.2);padding:32px 24px;text-align:center;position:relative;overflow:hidden;}
+.paywall::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bordeaux),var(--or),var(--bordeaux));}
+.pw-eye{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--or);margin-bottom:14px;}
+.pw-title{font-family:'Playfair Display',serif;font-size:23px;font-weight:900;margin-bottom:10px;line-height:1.2;}
+.pw-sub{font-size:14px;color:var(--blanc2);margin-bottom:24px;line-height:1.6;}
+.pw-urgency{background:rgba(128,0,32,.18);border:1px solid rgba(128,0,32,.35);padding:9px 14px;font-size:12px;color:var(--bordeaux2);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;}
+.pw-list{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;text-align:left;}
+.pw-it{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(242,242,242,.8);line-height:1.5;}
+.pw-it-ico{color:var(--or);flex-shrink:0;margin-top:1px;}
+.pw-price-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:6px;}
+.pw-old{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:rgba(242,242,242,.25);text-decoration:line-through;}
+.pw-price{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:700;color:var(--or);letter-spacing:-1px;line-height:1;}
+.pw-cur{font-size:20px;vertical-align:super;margin-right:2px;}
+.pw-note{font-size:11px;color:rgba(242,242,242,.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;}
+.btn-pay{width:100%;background:linear-gradient(135deg,var(--or3),var(--or));color:var(--noir);border:none;padding:18px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;cursor:pointer;transition:all .3s;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);display:block;text-decoration:none;margin-bottom:10px;}
+.btn-pay:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,168,76,.35);}
+.pw-guar{font-size:11px;color:rgba(242,242,242,.22);letter-spacing:1px;}
+
+/* SHARE */
+.share-wrap{padding:32px 20px 24px;text-align:center;}
+.share-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(242,242,242,.22);margin-bottom:20px;}
+.share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+.s-btn{position:relative;padding:13px 22px;border:none;background:var(--gris1);color:var(--blanc2);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:9px;overflow:hidden;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+.s-btn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;}
+.s-btn.wa{border-left:3px solid #25D366;}
+.s-btn.wa::before{background:linear-gradient(135deg,rgba(37,211,102,.15),rgba(37,211,102,.05));}
+.s-btn.wa:hover{color:#25D366;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.2);}
+.s-btn.wa:hover::before{opacity:1;}
+.s-btn.fb{border-left:3px solid #1877F2;}
+.s-btn.fb::before{background:linear-gradient(135deg,rgba(24,119,242,.15),rgba(24,119,242,.05));}
+.s-btn.fb:hover{color:#1877F2;transform:translateY(-2px);box-shadow:0 6px 20px rgba(24,119,242,.2);}
+.s-btn.fb:hover::before{opacity:1;}
+.s-btn.cp{border-left:3px solid var(--or);}
+.s-btn.cp::before{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));}
+.s-btn.cp:hover{color:var(--or);transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.2);}
+.s-btn.cp:hover::before{opacity:1;}
+.s-btn span{position:relative;z-index:1;}
+.s-btn-ico{font-size:16px;position:relative;z-index:1;}
+.retry-btn{background:none;border:1px solid rgba(242,242,242,.08);color:rgba(242,242,242,.28);padding:9px 22px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.retry-btn:hover{border-color:rgba(242,242,242,.2);color:rgba(242,242,242,.6);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideR{from{opacity:0;transform:translateX(26px);}to{opacity:1;transform:translateX(0);}}
+.anim{animation:slideR .36s ease both;}
+
+@media(max-width:480px){
+  .sticky-hdr{padding:8px 14px;}
+  .sticky-time{font-size:18px;}
+  .paywall{margin:0 8px;padding:26px 16px;}
+  .pw-price{font-size:40px;}
+  .r-name{font-size:42px;}
+}
+</style>
+</head>
+<body>
+<div class="ambient"><div class="amb1"></div><div class="amb2"></div></div>
+
+<!-- STICKY HDR -->
+<div class="sticky-hdr" id="sticky-hdr">
+  <div class="sticky-left">
+    <span class="sticky-label">Remise réservée pour</span>
+    <span class="sticky-time" id="sticky-clock">09:59</span>
+    <span class="sticky-disc">−85% appliquée</span>
+  </div>
+  <a href="https://nosimpszone.mychariow.shop" target="_blank" class="sticky-btn" id="sticky-btn">Obtenir mon rapport →</a>
+</div>
+
+<!-- TICKER (caché par défaut, visible sur résultats) -->
+<div class="ticker" id="ticker" style="display:none;">
+  <div class="ticker-inner" id="ticker-inner"></div>
+</div>
+
+<!-- ==================== INTRO ==================== -->
+<div id="s-intro">
+  <div class="nsz-stamp"><div class="nsz-line"></div><div class="nsz-txt">Nosimpszone</div><div class="nsz-line"></div></div>
+  <div class="i-eye">Test de Personnalité Séduction</div>
+  <h1 class="i-h1">Quel type de<br>séducteur<br>es-tu vraiment ?</h1>
+  <p class="i-desc">15 questions révèlent ton archétype d'attraction profond — ce qui te propulse naturellement et ce qui te sabote en silence avec les femmes exceptionnelles.</p>
+  <div class="pills">
+    <div class="pill"><b>15</b>Questions</div>
+    <div class="pill"><b>7</b>Profils</div>
+    <div class="pill"><b>4 min</b>Durée</div>
+    <div class="pill"><b>52K+</b>Testés</div>
+  </div>
+  <button class="btn-start" onclick="startQuiz()"><span>Révéler mon profil</span><span class="btn-arr">→</span></button>
+  <p class="i-note">100% gratuit · Résultats immédiats · Analyse approfondie disponible</p>
+</div>
+
+<!-- ==================== QUIZ ==================== -->
+<div id="s-quiz">
+  <div class="q-topbar"><span class="q-logo">NSZ</span><span class="q-cnt" id="q-cnt">1 / 15</span></div>
+  <div class="q-prog-wrap"><div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"><div class="q-prog-dot"></div></div></div></div>
+  <div class="q-body" id="q-area"></div>
+</div>
+
+<!-- ==================== LOADING ==================== -->
+<div id="s-load">
+  <div class="load-spin">⚙️</div>
+  <div class="load-steps">
+    <div class="ls" id="ls0"><div class="ls-dot"></div>Analyse de tes réponses</div>
+    <div class="ls" id="ls1"><div class="ls-dot"></div>Calcul de ton profil</div>
+    <div class="ls" id="ls2"><div class="ls-dot"></div>Évaluation des 6 dimensions</div>
+    <div class="ls" id="ls3"><div class="ls-dot"></div>Génération de ton rapport</div>
+  </div>
+  <div class="load-bar-w"><div class="load-bar-f" id="load-bar"></div></div>
+</div>
+
+<!-- ==================== RÉSULTAT ==================== -->
+<div id="s-result">
+
+  <!-- 1. HERO SCORE -->
+  <div class="res-hero">
+    <div class="res-hero-bg"></div>
+    <span class="r-eye">Ton archétype de séducteur</span>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-arch" id="r-arch"></div>
+    <div class="ring-wrap">
+      <div class="ring-box">
+        <svg class="ring-svg" viewBox="0 0 168 168">
+          <defs>
+            <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#800020"/>
+              <stop offset="100%" style="stop-color:#C9A84C"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="84" cy="84" r="70"/>
+          <circle class="ring-fill" id="r-ring" cx="84" cy="84" r="70"/>
+        </svg>
+        <div class="ring-ctr"><span class="ring-num" id="r-score">0</span><span class="ring-lbl">/ 100</span></div>
+      </div>
+    </div>
+    <div class="level-tag" id="r-level"></div>
+    <div class="divider"><div class="div-line"></div><div class="div-dia"></div><div class="div-line r"></div></div>
+  </div>
+
+  <!-- 2. IDENTITÉ (visible) -->
+  <div class="wrap">
+    <div class="sec-lbl">Ton identité de séducteur</div>
+    <div class="quote-blk"><div class="quote-txt" id="r-quote"></div></div>
+    <div class="prof-sum"><p id="r-summary"></p></div>
+    <div class="sec-lbl" style="margin-top:8px;">Tes 2 forces dominantes</div>
+    <div style="margin-bottom:32px;" id="r-str"></div>
+  </div>
+
+  <!-- 3. BLUR ZONE (réduite) -->
+  <div class="blur-zone">
+    <div class="blur-inner">
+      <div class="wrap">
+        <div class="sec-lbl">Analyse par dimension</div>
+        <div style="margin-bottom:14px;">
+          <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;text-transform:uppercase;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;">Dominance</span><span style="color:var(--or);font-family:'Barlow Condensed',sans-serif;">87%</span></div><div style="height:3px;background:rgba(242,242,242,.08);"><div style="width:87%;height:100%;background:linear-gradient(90deg,var(--bordeaux),var(--or));"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;text-transform:uppercase;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;">Mystère</span><span style="color:var(--or);font-family:'Barlow Condensed',sans-serif;">74%</span></div><div style="height:3px;background:rgba(242,242,242,.08);"><div style="width:74%;height:100%;background:linear-gradient(90deg,var(--bordeaux),var(--or));"></div></div></div>
+        </div>
+        <div class="sec-lbl">Ton point aveugle principal</div>
+        <div style="background:var(--gris1);border:1px solid rgba(242,242,242,.06);padding:14px;margin-bottom:20px;"><p style="font-size:13px;line-height:1.75;color:rgba(242,242,242,.6);">Ton principal frein est la difficulté à maintenir la tension émotionnelle sur la durée. Une fois l'attraction créée, tu as tendance à...</p></div>
+        <!-- TEASER DE CURIOSITÉ -->
+        <div style="padding:0 0 8px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--or);margin-bottom:14px;display:flex;align-items:center;gap:10px;">Le comportement qui te coûte le plus<span style="flex:1;height:1px;background:rgba(201,168,76,.15);"></span></div>
+          <p style="font-size:14px;line-height:1.8;color:rgba(242,242,242,.85);font-family:'Lato',sans-serif;">Il y a une chose précise que tu fais dans <strong style="color:var(--blanc);">les 48 premières heures</strong> après avoir créé de l'attraction — et c'est exactement ce qui la refroidit. Ce n'est pas ce que tu penses. La majorité des hommes de ton profil font cette erreur <strong style="color:var(--or);">sans même s'en rendre compte.</strong></p>
+          <div style="margin-top:16px;padding:12px 16px;border-left:3px solid var(--bordeaux);background:rgba(128,0,32,.1);">
+            <p style="font-size:13px;line-height:1.7;color:rgba(242,242,242,.7);font-family:'Lato',sans-serif;">Dans ton programme 30 jours, le <strong style="color:var(--blanc);">Jour 3</strong> est consacré entièrement à ce pattern. C'est souvent le jour où les hommes nous écrivent pour dire <em style="color:var(--or2);">"c'est exactement ce que je faisais..."</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="blur-overlay"></div>
+  </div>
+
+  <!-- 4. PAYWALL (premier) -->
+  <div class="paywall" style="margin-top:0;">
+    <div class="pw-eye">🔒 Analyse complète verrouillée</div>
+    <h2 class="pw-title">Débloquer ton rapport complet<br>+ Programme 30 jours</h2>
+    <p class="pw-sub">Tu viens de voir 30% de ton analyse. Le reste — ce qui change vraiment — est bloqué ci-dessous.</p>
+    <div class="pw-urgency">⚡ Offre limitée — <span id="pw-clock-1">09:59</span> restantes</div>
+    <div class="pw-list">
+      <div class="pw-it"><span class="pw-it-ico">📊</span><span>Analyse complète de tes <strong>6 dimensions</strong> avec scores détaillés</span></div>
+      <div class="pw-it"><span class="pw-it-ico">🎯</span><span>Tes <strong>3 points aveugles</strong> + stratégies pour les retourner</span></div>
+      <div class="pw-it"><span class="pw-it-ico">📅</span><span><strong>Programme 30 jours personnalisé</strong> — 1 action quotidienne</span></div>
+      <div class="pw-it"><span class="pw-it-ico">📄</span><span>Rapport PDF téléchargeable, accès à vie</span></div>
+      <div class="pw-it"><span class="pw-it-ico">🧠</span><span>Scripts et cadres mentaux pour ton archétype exact</span></div>
+    </div>
+    <div class="pw-price-row">
+      <span class="pw-old"><span class="pw-old-val">9,99€</span></span>
+      <span class="pw-price"><span class="pw-sym">$</span><span class="pw-price-val">1,50</span></span>
+    </div>
+    <p class="pw-note"><span class="pw-note-txt">Paiement unique · Pas d'abonnement · Accès immédiat</span></p>
+    <a href="https://nosimpszone.mychariow.shop" target="_blank" class="btn-pay" id="pw-btn1">Débloquer mon analyse complète →</a>
+    <p class="pw-guar">🔐 Paiement sécurisé via Chariow</p>
+  </div>
+
+  <!-- 5. COMPARAISON FIGURES CONNUES -->
+  <div class="comp-section" style="margin-top:32px;">
+    <div class="comp-title">Ton profil parmi les figures connues</div>
+    <div class="comp-cards" id="comp-cards"></div>
+  </div>
+
+  <!-- 6. SOCIAL PROOF -->
+  <div class="social-bar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="sp-avatars">
+        <div class="sp-av">🧔</div><div class="sp-av">👨</div><div class="sp-av">🧔</div>
+        <div class="sp-av" style="background:var(--bordeaux3);font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--or);">+891</div>
+      </div>
+      <div class="sp-txt"><b>52 341</b> hommes ont découvert<br>leur profil ce mois-ci</div>
+    </div>
+  </div>
+
+  <!-- 7. GAINS -->
+  <div class="gains-sec">
+    <h3 class="gains-title">Ce que tu vas débloquer</h3>
+    <p class="gains-sub">Avec ton rapport complet + programme 30 jours</p>
+    <div class="gains-grid">
+      <div class="gain-it"><span class="gain-ico">⚡</span><span class="gain-txt">Comprendre exactement ce qui bloque ton attraction aujourd'hui</span></div>
+      <div class="gain-it"><span class="gain-ico">🎯</span><span class="gain-txt">Savoir quelles femmes tu attires naturellement et pourquoi</span></div>
+      <div class="gain-it"><span class="gain-ico">🧠</span><span class="gain-txt">Scripts et cadres mentaux adaptés à ton profil exact</span></div>
+      <div class="gain-it"><span class="gain-ico">📅</span><span class="gain-txt">Actions concrètes jour par jour sur 30 jours</span></div>
+    </div>
+  </div>
+
+  <!-- 8. TÉMOIGNAGES -->
+  <div class="testi-sec">
+    <div class="testi-title">Ce qu'ils disent après avoir débloqué leur analyse</div>
+    <div class="testi-card">
+      <div class="t-img">🧔🏾</div>
+      <div class="t-body">
+        <div class="t-hdr"><span class="t-name">Kévin M., 27 ans</span><span class="t-flag">🇨🇮 Abidjan</span></div>
+        <div class="t-stars">★★★★★</div>
+        <p class="t-txt">Le profil "Le Mystérieux" m'a mis face à quelque chose que je refusais de voir. Je pensais que garder le silence était ma force — c'était en fait ma fuite. Le programme 30 jours m'a appris à utiliser le silence comme outil, pas comme bouclier.</p>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="t-img">👨🏿</div>
+      <div class="t-body">
+        <div class="t-hdr"><span class="t-name">David T., 32 ans</span><span class="t-flag">🇫🇷 Paris</span></div>
+        <div class="t-stars">★★★★★</div>
+        <p class="t-txt">J'ai payé les 1,50$ pour voir si c'était sérieux. Le PDF fait 34 pages sur mon profil exact. Le programme donne une action précise par jour. J'ai changé plus de choses en 3 semaines qu'en 2 ans de "travail sur moi-même" au feeling.</p>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="t-img">🧔🏾</div>
+      <div class="t-body">
+        <div class="t-hdr"><span class="t-name">Marcus L., 24 ans</span><span class="t-flag">🇧🇪 Bruxelles</span></div>
+        <div class="t-stars">★★★★★</div>
+        <p class="t-txt">Ce qui m'a choqué c'est que les "points aveugles" décrivaient exactement ce qui s'était passé dans mes 3 dernières situations. Pas vaguement — précisément. Le quiz a clairement capté quelque chose de réel.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. FAQ -->
+  <div class="faq-sec">
+    <h3 class="faq-title">Questions fréquentes</h3>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><div class="faq-ico">?</div><span class="faq-qt">Qu'est-ce que je reçois exactement après le paiement ?</span><span class="faq-arr">▾</span></div>
+      <div class="faq-a"><p>Tu reçois immédiatement un PDF téléchargeable avec ton analyse complète sur 6 dimensions, tes 3 points aveugles détaillés, et un programme personnalisé 30 jours avec une action spécifique par jour — tout adapté à ton profil. Accès instantané, paiement unique.</p></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><div class="faq-ico">?</div><span class="faq-qt">Pourquoi seulement 1,50$ ? C'est quoi le piège ?</span><span class="faq-arr">▾</span></div>
+      <div class="faq-a"><p>Aucun piège. Pas d'abonnement caché, pas de renouvellement automatique. Prix de lancement pour que le maximum d'hommes puisse tester avant que le tarif monte à 9,99€. Un seul paiement, accès permanent.</p></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><div class="faq-ico">?</div><span class="faq-qt">Est-ce que ça marche si je suis en Afrique ou en diaspora ?</span><span class="faq-arr">▾</span></div>
+      <div class="faq-a"><p>Le contenu a été développé spécifiquement pour les hommes francophones africains et de la diaspora. Les dynamiques, références et exemples sont calibrés pour ta réalité. C'est exactement pour ça que Nosimpszone existe.</p></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><div class="faq-ico">?</div><span class="faq-qt">En combien de temps je vais voir une différence concrète ?</span><span class="faq-arr">▾</span></div>
+      <div class="faq-a"><p>La majorité des hommes rapportent une différence perçue dès la première semaine. Pas une transformation miracle — une clarté immédiate sur ce qu'ils faisaient mal et des actions précises pour corriger, jour après jour.</p></div>
+    </div>
+  </div>
+
+  <!-- 10. PAYWALL BAS DE PAGE -->
+  <div class="paywall">
+    <div class="pw-eye">⚡ Offre de lancement</div>
+    <h2 class="pw-title">Ton rapport complet<br>+ Programme 30 jours</h2>
+    <div class="pw-urgency">🕐 Cette remise expire dans <span id="pw-clock-2">09:59</span></div>
+    <div class="pw-list">
+      <div class="pw-it"><span class="pw-it-ico">📊</span><span>Analyse complète des <strong>6 dimensions</strong> de séduction</span></div>
+      <div class="pw-it"><span class="pw-it-ico">🎯</span><span>Tes <strong>3 points aveugles</strong> + stratégies pour les retourner</span></div>
+      <div class="pw-it"><span class="pw-it-ico">📅</span><span><strong>Programme 30 jours</strong> — 1 action concrète par jour</span></div>
+      <div class="pw-it"><span class="pw-it-ico">📄</span><span>Rapport PDF à télécharger, accès à vie</span></div>
+      <div class="pw-it"><span class="pw-it-ico">🧠</span><span>Scripts et cadres mentaux pour ton archétype exact</span></div>
+    </div>
+    <div class="pw-price-row">
+      <span class="pw-old"><span class="pw-old-val">9,99€</span></span>
+      <span class="pw-price"><span class="pw-sym">$</span><span class="pw-price-val">1,50</span></span>
+    </div>
+    <p class="pw-note"><span class="pw-note-txt">Paiement unique · Pas d'abonnement · Accès immédiat</span></p>
+    <a href="https://nosimpszone.mychariow.shop" target="_blank" class="btn-pay" id="pw-btn2">Débloquer mon analyse complète →</a>
+    <p class="pw-guar">🔐 Paiement sécurisé via Chariow</p>
+  </div>
+
+  <!-- 11. SHARE + RETRY -->
+  <div class="share-wrap">
+    <div class="share-lbl">Partage ton profil</div>
+    <div class="share-row">
+      <button class="s-btn wa" onclick="shareWA()">
+        <span class="s-btn-ico">📱</span>
+        <span>WhatsApp</span>
+      </button>
+      <button class="s-btn fb" onclick="shareFB()">
+        <span class="s-btn-ico">👥</span>
+        <span>Facebook</span>
+      </button>
+      <button class="s-btn cp" onclick="copyURL(this)">
+        <span class="s-btn-ico">🔗</span>
+        <span>Copier le lien</span>
+      </button>
+    </div>
+    <button class="retry-btn" onclick="resetAll()">↺ Refaire le test</button>
+  </div>
+</div>
+
+<script>
+// ================================================================
+//  DATA — QUESTIONS
+// ================================================================
+const QS=[
+  {t:"Une femme exceptionnellement attirante entre dans l'espace. Ton corps réagit avant même que tu aies le temps de penser. Qu'est-ce qui se passe vraiment ?",ctx:"Sois honnête — pas ce que tu devrais faire.",a:[{t:"Mon regard se pose sur elle, mais je continue ce que je faisais sans modifier mon comportement visible",d:{D:2,M:1}},{t:"Je cherche instinctivement un point d'entrée naturel pour me rapprocher",d:{A:2,S:1}},{t:"J'observe comment elle se comporte avant d'évaluer si elle mérite mon attention",d:{O:2,M:1}},{t:"Je ressens une légère montée d'adrénaline et j'analyse pourquoi elle m'impacte autant",d:{E:2,O:1}}]},
+  {t:"Tu es en conversation avec une femme de valeur. Il y a un silence de 4 à 5 secondes. Qu'est-ce que ce silence révèle chez toi ?",ctx:"Le silence dit plus sur un homme que ses mots.",a:[{t:"Je le laisse durer — j'ai appris que la tension silencieuse filtre les femmes solides",d:{D:2,M:2}},{t:"Je rebondis naturellement, j'aime que la conversation coule",d:{S:2,A:1}},{t:"Je l'utilise pour l'observer et calibrer précisément ma prochaine phrase",d:{ST:2,O:1}},{t:"Je suis légèrement inconfortable mais j'ai appris à l'accepter",d:{E:1,S:1}}]},
+  {t:"Elle joue le chaud-froid depuis 3 jours. Hier elle était explosive. Aujourd'hui c'est 'vu' sans réponse. Qu'est-ce que tu fais ?",ctx:"Ce test révèle ton rapport à la validation féminine.",a:[{t:"Je disparais complètement 5 à 7 jours pour rééquilibrer le rapport de force",d:{D:2,ST:1}},{t:"Je lui envoie un message inattendu qui brise complètement son pattern",d:{ST:2,M:1}},{t:"Je l'appelle directement pour nommer la situation sans tourner autour",d:{A:2,D:1}},{t:"Je continue normalement, son comportement ne change rien à ma trajectoire",d:{D:2,A:1}}]},
+  {t:"Trois hommes discutent d'une femme que vous connaissez tous les trois. Comment tu participes à cette conversation ?",ctx:"Les dynamiques de groupe révèlent le cadre intérieur.",a:[{t:"J'écoute plus que je ne parle — je ne vais pas livrer mes cartes gratuitement",d:{M:2,ST:1}},{t:"Je recadre la conversation si elle part dans une direction qui ne me convient pas",d:{D:2,A:1}},{t:"Je participe naturellement — partager les dynamiques masculines, c'est utile",d:{S:2,E:1}},{t:"J'observe les réactions des autres pour comprendre qui est vraiment dominant dans le groupe",d:{O:2,ST:1}}]},
+  {t:"Elle te dit : 'T'es pas vraiment mon type habituellement.' Avec un petit sourire. Quelle est ta réaction authentique ?",ctx:"Cette phrase est un test classique. Ta vraie réaction compte.",a:[{t:"Je souris légèrement et je change de sujet comme si c'était anodin",d:{D:2,M:1}},{t:"Je réponds : 'Habituellement, c'est le mot intéressant là-dedans'",d:{ST:2,M:1}},{t:"Je ris et je joue le jeu : 'Et c'est quoi ton type alors ?'",d:{S:2,A:1}},{t:"Je la regarde sans rien dire pendant deux secondes, puis je continue la conversation",d:{D:2,O:1}}]},
+  {t:"Comment se passe une première rencontre physique chez toi — dans les 30 premières minutes ?",ctx:"Pas l'idéal. Ce qui se passe vraiment.",a:[{t:"Je suis présent, calme, peu bavard — je laisse la tension s'installer naturellement",d:{D:2,M:1}},{t:"Je crée rapidement un moment mémorable pour qu'elle parte avec une image forte",d:{ST:2,S:1}},{t:"Je cherche la connexion réelle — les sujets profonds qui créent la proximité",d:{E:2,S:1}},{t:"J'évalue rapidement ses comportements pour ajuster mon niveau d'investissement",d:{O:2,ST:1}}]},
+  {t:"Quelle est ta vraie relation avec l'approche à froid — aller vers une inconnue ?",ctx:"L'honnêteté ici est précieuse pour ton analyse.",a:[{t:"Je le fais quand la situation s'y prête naturellement — je ne force rien",d:{D:2,M:1}},{t:"C'est mon mode naturel, j'aime l'énergie brute du premier contact",d:{A:2,S:1}},{t:"Je le fais mais c'est encore un point de travail — l'hésitation est réelle",d:{A:1,E:1}},{t:"Je préfère les contextes sociaux où le contact se crée sans artifice",d:{S:2,O:1}}]},
+  {t:"Elle te présente un de ses amis masculins. Il est grand, plus musclé, et visiblement intéressé par elle. Comment tu vis ce moment ?",ctx:"La jalousie masculine est un signal précieux sur le cadre intérieur.",a:[{t:"Rien ne change dans mon comportement — la compétition ne me regarde pas",d:{D:2,M:1}},{t:"J'observe la dynamique entre eux pour calibrer ma position réelle",d:{O:2,ST:1}},{t:"Je crée une occasion de montrer ma valeur différemment — la compétition m'active",d:{A:2,S:1}},{t:"Je ressens quelque chose mais je le gère — puis j'analyse ce que ça révèle",d:{E:2,O:1}}]},
+  {t:"Dans une relation ou une dynamique en cours, ce que tu veux vraiment — pas ce que tu devrais vouloir ?",ctx:"Tes vrais désirs définissent ton archétype mieux que n'importe quelle réponse correcte.",a:[{t:"La liberté totale de mener le rythme et de définir le cadre de la relation",d:{D:2,A:1}},{t:"La tension permanente — que ce soit électrique, imprévisible, intense",d:{M:2,E:1}},{t:"Une complicité profonde construite sur le temps et la confiance mutuelle",d:{S:2,E:1}},{t:"Avoir une femme qui me surprend et me challenge intellectuellement",d:{E:2,ST:1}}]},
+  {t:"Un homme dans ton cercle social a une influence naturelle sur les femmes. Comment tu le regardes ?",ctx:"Ce que tu admires ou rejettes révèle ce que tu vises inconsciemment.",a:[{t:"Je l'observe pour comprendre exactement ce qu'il fait et pourquoi ça marche",d:{ST:2,O:2}},{t:"Je reconnais ce que je dois encore développer — ça m'active positivement",d:{A:2,E:1}},{t:"Je suis objectif : ses résultats parlent d'eux-mêmes",d:{D:2,M:1}},{t:"Je cherche à comprendre s'il est vraiment à l'aise ou s'il joue un rôle",d:{E:2,O:1}}]},
+  {t:"Tu es à un dîner. Tu repères une femme à l'autre bout de la table qui croise ton regard deux fois. Qu'est-ce qui se passe ensuite ?",ctx:"Ce moment précis révèle ton style d'escalade.",a:[{t:"Je soutiens son regard la troisième fois sans sourire ni détourner les yeux",d:{D:2,M:1}},{t:"Je cherche un moment naturel pour me retrouver à proximité sans le calculer",d:{ST:2,S:1}},{t:"Je lui parle directement à la première occasion — les signaux sont là",d:{A:2,D:1}},{t:"Je continue la soirée et je laisse la tension monter d'elle-même",d:{M:2,D:1}}]},
+  {t:"Comment tu te comportes dans les 48h après un premier rendez-vous qui s'est très bien passé ?",ctx:"L'après-RDV révèle ton rapport à l'enjeu.",a:[{t:"Je ne change rien à mon rythme habituel — trop vite = perte de cadre",d:{D:2,M:1}},{t:"J'envoie un message court et percutant qui ancre le souvenir du moment",d:{ST:2,A:1}},{t:"J'attends qu'elle se manifeste — si c'était bien pour elle aussi, elle va bouger",d:{M:2,O:1}},{t:"Je propose rapidement une deuxième occasion — battre le fer pendant qu'il est chaud",d:{A:2,S:1}}]},
+  {t:"Elle annule un plan à la dernière minute sans vraiment d'explication. C'est la première fois. Qu'est-ce qui se passe en toi ?",ctx:"Les annulations sont l'un des tests les plus révélateurs.",a:[{t:"Je réponds avec calme. Je ne reprends pas l'initiative de sitôt",d:{D:2,M:1}},{t:"Je prends note mentalement. Deux fois = pattern. Je réévalue l'investissement",d:{ST:2,O:1}},{t:"Je lui demande directement si tout va bien — l'honnêteté directe prime",d:{A:2,E:1}},{t:"Je ressens quelque chose, je l'analyse pour comprendre mon propre niveau d'enjeu",d:{E:2,O:1}}]},
+  {t:"Quelle phrase décrit le plus précisément ta posture mentale actuelle en séduction ?",ctx:"Pas l'idéal. Ce que tu vis vraiment.",a:[{t:"Je n'essaie pas de plaire. J'existe pleinement et je filtre.",d:{D:2,M:1}},{t:"Je construis une version de moi qui attire naturellement ce que je veux",d:{ST:2,A:1}},{t:"Je veux des connexions authentiques — le reste vient si c'est juste",d:{E:2,S:1}},{t:"Je prends des risques et j'assume — l'inaction me coûte plus que l'échec",d:{A:2,D:1}}]},
+  {t:"Quel est ton plus grand chantier réel en ce moment — pas le plus glamour, le plus vrai ?",ctx:"Cette réponse finale pondère ton profil global.",a:[{t:"Maintenir mon cadre sans devenir froid ou distant sur la durée",d:{D:2,E:1}},{t:"Lire les signaux avec précision pour agir au bon moment",d:{O:2,ST:1}},{t:"Transformer les bonnes connexions en quelque chose de réel et concret",d:{A:2,S:1}},{t:"Gérer l'enjeu émotionnel sans perdre ma stabilité intérieure",d:{E:2,D:1}}]}
+];
+
+// ================================================================
+//  DATA — PROFILS
+// ================================================================
+const PR={
+  D:{name:"Le Dominant",arch:"Archétype · Puissance",level:"Niveau Élite",score:[74,88],
+    quote:"« Tu n'attires pas par ce que tu fais. Tu attires par ce que tu incarnes. »",
+    sum:"Tu es l'homme dont la présence change la dynamique d'une pièce avant que tu aies dit un mot. Les femmes hors du commun le sentent immédiatement : tu ne seras pas facile à contrôler — et c'est exactement ce qui les fascine. Ton défi : rendre accessible cette puissance sans la diluer.",
+    str:[{t:"Présence magnétique naturelle",d:"Ton calme face à la pression communique une confiance que la majorité des hommes simulent sans jamais posséder."},{t:"Cadre émotionnel inébranlable",d:"Quand une femme teste ou provoque — tu ne cèdes pas. Ce refus non-agressif de plier est l'une des qualités les plus rares et les plus désirées."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"🗿",n:"Don Draper",s:"Dominant 72"},r:{ico:"👑",n:"Jay-Z",s:"Dominant 94"}}},
+  M:{name:"Le Mystérieux",arch:"Archétype · Inaccessible",level:"Niveau Avancé",score:[66,80],
+    quote:"« Ce qu'on ne comprend pas complètement, on ne peut pas s'empêcher d'y penser. »",
+    sum:"Tu maîtrises l'art de révéler peu et d'intriguer beaucoup. Les femmes construisent une image de toi qui dépasse souvent la réalité — et tu as compris que c'est un avantage structurel. Ton risque : rester si inaccessible que l'attraction ne se transforme jamais en quelque chose de concret.",
+    str:[{t:"Fascination durable sans effort",d:"Tu ne te vends pas. Tu existes, tu filtres — et ceux qui s'approchent le font par choix réel."},{t:"Maîtrise de la tension émotionnelle",d:"Tu crées ce sentiment instable et agréable chez une femme : elle ne sait jamais exactement où elle en est avec toi."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"🎭",n:"Keanu Reeves",s:"Mystérieux 71"},r:{ico:"🌑",n:"The Weeknd",s:"Mystérieux 89"}}},
+  ST:{name:"Le Stratège",arch:"Archétype · Architecte",level:"Niveau Expert",score:[68,83],
+    quote:"« Chaque échange est une information. Chaque information est un levier. »",
+    sum:"Tu approches la séduction comme un jeu d'échecs. Tu lis les patterns, anticipes les réactions, optimises chaque interaction. Ton angle mort : à force de tout calculer, tu peux perdre ce que les femmes recherchent — quelqu'un qui les désire vraiment, spontanément.",
+    str:[{t:"Lecture fine des dynamiques",d:"Tu es rarement pris par surprise. Tu vois les tests arriver, les jeux émotionnels, les changements de rapport."},{t:"Adaptabilité tactique précise",d:"Tu ne réagis pas au même stimulus de la même façon deux fois. Avec des femmes complexes, c'est exactement ce qu'il faut."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"♟️",n:"Bobby Fischer",s:"Stratège 75"},r:{ico:"🧩",n:"Harvey Specter",s:"Stratège 91"}}},
+  S:{name:"Le Magnétique",arch:"Archétype · Connecteur",level:"Niveau Confirmé",score:[58,74],
+    quote:"« Tu n'entres pas dans une pièce. Tu changes son atmosphère. »",
+    sum:"Tu as le don rare de rendre les gens — et les femmes en particulier — à l'aise immédiatement. Ton énergie naturelle crée des connexions rapides. Ton défi : transformer cette chaleur sociale en désir véritable. Il ne suffit pas qu'elles t'apprécient — il faut qu'elles te désirent.",
+    str:[{t:"Facilité d'approche naturelle",d:"L'approche ne te coûte rien. Tu peux engager une conversation dans n'importe quel contexte sans la friction qui paralyse la majorité."},{t:"Créateur d'expériences mémorables",d:"Les femmes qui te connaissent ont des souvenirs précis de moments avec toi. C'est une base d'attraction réelle — mais elle a besoin d'être polarisée."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"🎤",n:"Will Smith",s:"Magnétique 77"},r:{ico:"⚡",n:"Stromae",s:"Magnétique 88"}}},
+  A:{name:"Le Chasseur",arch:"Archétype · Audacieux",level:"Niveau Confirmé",score:[56,72],
+    quote:"« L'homme qui n'ose pas est déjà vaincu avant même de commencer. »",
+    sum:"Tu n'hésites pas, tu ne sur-analyses pas : tu passes à l'action quand la plupart attendent encore. Cette audace est une qualité rare que les femmes ressentent comme une confiance réelle. Ton défi : apprendre que parfois la retenue stratégique est plus puissante que l'assaut direct.",
+    str:[{t:"Courage d'approche hors norme",d:"La peur du rejet qui paralyse 80% des hommes ne te gouverne pas. Cette liberté d'action te crée des opportunités que les autres ne verront jamais."},{t:"Initiative permanente et assumée",d:"Tu prends la responsabilité de l'escalade. Les femmes de valeur respectent les hommes qui assument la direction."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"🥊",n:"Rocky Balboa",s:"Chasseur 68"},r:{ico:"🦁",n:"Conor McGregor",s:"Chasseur 90"}}},
+  E:{name:"L'Alchimiste",arch:"Archétype · Profondeur",level:"Niveau Intermédiaire",score:[52,68],
+    quote:"« Ce qui se ressent ne s'explique pas. Ce qui s'explique ne se ressent pas. »",
+    sum:"Tu possèdes une intelligence émotionnelle que la plupart des hommes ne développeront jamais. Tu comprends les femmes à un niveau souterrain. Elles te trouvent 'différent', 'rare'. Ton obstacle : transformer cette connexion émotionnelle profonde en attraction concrète.",
+    str:[{t:"Intelligence émotionnelle rare",d:"Tu perçois ce que les femmes ressentent vraiment derrière ce qu'elles disent. Un avantage massif si tu apprends à l'utiliser sans perdre ta polarité."},{t:"Authenticité désarmante",d:"Tu ne joues pas de rôle. Les femmes entourées d'hommes qui performent ressentent immédiatement la différence."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"🎵",n:"Drake",s:"Alchimiste 66"},r:{ico:"🔮",n:"Kendrick Lamar",s:"Alchimiste 92"}}},
+  O:{name:"L'Observateur",arch:"Archétype · Analyste",level:"Niveau Intermédiaire",score:[54,70],
+    quote:"« Celui qui comprend vraiment n'a pas besoin d'agir souvent — mais quand il agit, c'est chirurgical. »",
+    sum:"Tu lis les situations avec une précision que peu possèdent. Tu remarques les micro-expressions, les incohérences, les dynamiques invisibles. Ton défi : sortir du mode observateur pour passer à l'action avec la même lucidité.",
+    str:[{t:"Lecture précise des comportements",d:"Tu catches les signaux subtils que la majorité rate complètement. Cette compétence te permet d'agir au moment exact où c'est le plus efficace."},{t:"Rarement déstabilisé par les jeux",d:"Parce que tu vois les patterns arriver, les tentatives de test ne t'atteignent pas de la même façon."}],
+    link:"https://nosimpszone.mychariow.shop",
+    comp:{l:{ico:"🔍",n:"Sherlock Holmes",s:"Observateur 74"},r:{ico:"🦅",n:"Barack Obama",s:"Observateur 93"}}}
+};
+
+// ================================================================
+//  STATE
+// ================================================================
+let qIdx=0, scores={D:0,M:0,ST:0,S:0,A:0,E:0,O:0};
+let _pk='D', _sc=0, _timerSec=599, _timerIv=null;
+const LET=['A','B','C','D'];
+
+// ================================================================
+//  GEO PRICING
+// ================================================================
+const GEO_PRICES={
+  // FCFA zone (Afrique francophone)
+  CI:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  SN:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  ML:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  BF:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  BJ:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  TG:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  NE:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  GN:{sym:'GNF',amount:'13 000',old:'85 000',note:'Paiement unique · Pas d\'abonnement'},
+  CM:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  CD:{sym:'CDF',amount:'4 000',old:'26 000',note:'Paiement unique · Pas d\'abonnement'},
+  GA:{sym:'FCFA',amount:'1 000',old:'6 500',note:'Paiement unique · Pas d\'abonnement'},
+  // EUR zone
+  FR:{sym:'€',amount:'1,50',old:'9,99',note:'Paiement unique · Accès immédiat'},
+  BE:{sym:'€',amount:'1,50',old:'9,99',note:'Paiement unique · Accès immédiat'},
+  LU:{sym:'€',amount:'1,50',old:'9,99',note:'Paiement unique · Accès immédiat'},
+  CH:{sym:'CHF',amount:'1.50',old:'9.90',note:'Paiement unique · Accès immédiat'},
+  CA:{sym:'CA$',amount:'2.00',old:'13.00',note:'Paiement unique · Accès immédiat'},
+  // Default USD
+  DEFAULT:{sym:'$',amount:'1.50',old:'9.99',note:'Single payment · Instant access'}
+};
+
+async function detectAndSetPrice(){
+  let pricing=GEO_PRICES.DEFAULT;
+  try{
+    const r=await fetch('https://ipapi.co/json/',{signal:AbortSignal.timeout(4000)});
+    const data=await r.json();
+    const code=data.country_code||'';
+    pricing=GEO_PRICES[code]||GEO_PRICES.DEFAULT;
+  }catch(e){/* fallback to default */}
+  // Inject into all paywall price elements
+  document.querySelectorAll('.pw-price-val').forEach(el=>el.textContent=pricing.amount);
+  document.querySelectorAll('.pw-sym').forEach(el=>el.textContent=pricing.sym);
+  document.querySelectorAll('.pw-old-val').forEach(el=>el.textContent=pricing.old+pricing.sym);
+  document.querySelectorAll('.pw-note-txt').forEach(el=>el.textContent=pricing.note);
+  // sticky
+  const st=document.getElementById('sticky-disc');
+  if(st)st.textContent='Prix de lancement appliqué';
+}
+
+// ================================================================
+//  TICKER
+// ================================================================
+const TNAMES=['Kofi','Amadou','Serge','Bryan','Lionel','Marcus','Théo','Damien','Raphaël','Samuel','Jonathan','Eddy','Cédric','Patrick','Kévin','Stéphane','Junior','Narcisse','Gaël','Franck'];
+const TPROFS=['Le Dominant','Le Mystérieux','Le Stratège','Le Magnétique','Le Chasseur','L\'Alchimiste','L\'Observateur'];
+const TFLAGS=['🇨🇮','🇫🇷','🇧🇯','🇸🇳','🇧🇪','🇨🇲','🇨🇩','🇹🇬'];
+function buildTicker(){
+  const items=[];
+  for(let i=0;i<16;i++){
+    const n=TNAMES[Math.floor(Math.random()*TNAMES.length)];
+    const p=TPROFS[Math.floor(Math.random()*TPROFS.length)];
+    const f=TFLAGS[Math.floor(Math.random()*TFLAGS.length)];
+    items.push(`<span class="ticker-item">${f} <b>${n}</b> vient de découvrir son profil : ${p} <span style="color:var(--bordeaux);opacity:.5;">·</span></span>`);
+  }
+  document.getElementById('ticker-inner').innerHTML=items.join('')+items.join('');
+}
+
+// ================================================================
+//  COUNTDOWN
+// ================================================================
+function fmt(s){return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+function startTimer(){
+  _timerIv=setInterval(()=>{
+    if(_timerSec>0) _timerSec--;
+    const t=fmt(_timerSec);
+    ['sticky-clock','pw-clock-1','pw-clock-2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t;});
+    if(_timerSec===0){_timerSec=599;}
+  },1000);
+}
+
+// ================================================================
+//  STICKY
+// ================================================================
+function initSticky(){
+  window.addEventListener('scroll',()=>{
+    const visible=document.getElementById('s-result').style.display!=='none';
+    document.getElementById('sticky-hdr').classList.toggle('on',visible&&window.scrollY>180);
+  });
+}
+
+// ================================================================
+//  COMPARISON CARDS
+// ================================================================
+function buildComp(){
+  const c=PR[_pk].comp;
+  document.getElementById('comp-cards').innerHTML=`
+    <div class="comp-card">
+      <span class="cc-ico">${c.l.ico}</span>
+      <div class="cc-score">${c.l.s}</div>
+      <div class="cc-name">${c.l.n}</div>
+    </div>
+    <div class="comp-card me">
+      <div class="cc-badge">TOI</div>
+      <span class="cc-ico">🧔🏾</span>
+      <div class="cc-score">${PR[_pk].arch.replace('Archétype · ','')} ${_sc}</div>
+      <div class="cc-name">Ton profil</div>
+    </div>
+    <div class="comp-card">
+      <span class="cc-ico">${c.r.ico}</span>
+      <div class="cc-score">${c.r.s}</div>
+      <div class="cc-name">${c.r.n}</div>
+    </div>`;
+}
+
+// ================================================================
+//  QUIZ
+// ================================================================
+function startQuiz(){
+  document.getElementById('s-intro').style.display='none';
+  document.getElementById('s-quiz').style.display='block';
+  renderQ();
+}
+function renderQ(){
+  const q=QS[qIdx];
+  document.getElementById('q-cnt').textContent=`${qIdx+1} / ${QS.length}`;
+  document.getElementById('q-prog').style.width=`${(qIdx/QS.length)*100}%`;
+  document.getElementById('q-area').innerHTML=`
+    <div class="anim">
+      <div class="q-tag">Question ${qIdx+1} sur ${QS.length}</div>
+      <div class="q-text">${q.t}</div>
+      ${q.ctx?`<div class="q-ctx">${q.ctx}</div>`:''}
+      <div class="q-answers">${q.a.map((a,i)=>`
+        <button class="q-ans" onclick="pick(${i})">
+          <span class="q-ans-l">${LET[i]}.</span>
+          <span>${a.t}</span>
+          <div class="q-bar"></div>
+        </button>`).join('')}
+      </div>
+    </div>`;
+}
+function pick(i){
+  document.querySelectorAll('.q-ans').forEach((b,j)=>b.classList.toggle('sel',j===i));
+  setTimeout(()=>{
+    const d=QS[qIdx].a[i].d;
+    for(const[k,v] of Object.entries(d)) if(scores[k]!==undefined) scores[k]+=v;
+    qIdx++;
+    if(qIdx<QS.length) renderQ(); else showLoad();
+  },320);
+}
+
+// ================================================================
+//  LOADING
+// ================================================================
+function showLoad(){
+  document.getElementById('s-quiz').style.display='none';
+  document.getElementById('s-load').style.display='flex';
+  const bar=document.getElementById('load-bar');
+  let p=0;
+  const iv=setInterval(()=>{p=Math.min(p+1.4,100);bar.style.width=p+'%';if(p>=100)clearInterval(iv);},28);
+  [0,600,1200,1800].forEach((t,i)=>setTimeout(()=>document.getElementById('ls'+i).classList.add('done'),t));
+  setTimeout(()=>{
+    document.getElementById('s-load').style.display='none';
+    buildResult();
+    document.getElementById('s-result').style.display='block';
+    document.getElementById('ticker').style.display='block';
+    buildTicker();
+    startTimer();
+    detectAndSetPrice();
+    initSticky();
+    animResult();
+    const p=PR[_pk];
+    ['pw-btn1','pw-btn2','sticky-btn'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=p.link;});
+    window.scrollTo(0,0);
+  },2400);
+}
+
+// ================================================================
+//  BUILD RESULT
+// ================================================================
+function topP(){let b='D',m=0;for(const[k,v] of Object.entries(scores))if(v>m){m=v;b=k;}return b;}
+function buildResult(){
+  _pk=topP();
+  const p=PR[_pk];
+  _sc=p.score[0]+Math.floor(Math.random()*(p.score[1]-p.score[0]));
+  document.getElementById('r-name').textContent=p.name;
+  document.getElementById('r-arch').textContent=p.arch;
+  document.getElementById('r-level').textContent=p.level;
+  document.getElementById('r-score').textContent='0';
+  document.getElementById('r-quote').textContent=p.quote;
+  document.getElementById('r-summary').textContent=p.sum;
+  document.getElementById('r-str').innerHTML=p.str.map(s=>`
+    <div class="str-item">
+      <span class="str-ico">⚡</span>
+      <span class="str-txt"><strong>${s.t}</strong><br>${s.d}</span>
+    </div>`).join('');
+  buildComp();
+}
+function animResult(){
+  const circ=440, offset=circ-(_sc/100)*circ;
+  setTimeout(()=>document.getElementById('r-ring').style.strokeDashoffset=offset,100);
+  const el=document.getElementById('r-score');
+  let cur=0; const step=_sc/68;
+  const iv=setInterval(()=>{cur=Math.min(cur+step,_sc);el.textContent=Math.round(cur);if(cur>=_sc)clearInterval(iv);},22);
+}
+
+// ================================================================
+//  SHARE / RESET
+// ================================================================
+function shareWA(){const p=PR[_pk];window.open(`https://wa.me/?text=${encodeURIComponent('🔥 Mon profil de séducteur : '+p.name+' ('+_sc+'/100)\nFais le test — gratuit : '+window.location.href)}`);}
+function shareFB(){window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`);}
+function copyURL(btn){navigator.clipboard.writeText(window.location.href).then(()=>{btn.textContent='✓ Copié !';setTimeout(()=>btn.textContent='🔗 Copier le lien',2000);}).catch(()=>alert(window.location.href));}
+function resetAll(){
+  if(_timerIv)clearInterval(_timerIv);
+  _timerSec=599; qIdx=0; scores={D:0,M:0,ST:0,S:0,A:0,E:0,O:0};
+  document.getElementById('s-result').style.display='none';
+  document.getElementById('ticker').style.display='none';
+  document.getElementById('sticky-hdr').classList.remove('on');
+  document.getElementById('s-intro').style.display='flex';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
